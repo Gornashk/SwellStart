@@ -60,7 +60,7 @@ function my_login_logo_url() {
 add_filter( 'login_headerurl', 'my_login_logo_url' );
 
 function my_login_logo_url_title() {
-    return 'A Classic Party Rental';
+    return 'Website Title Here';
 }
 add_filter( 'login_headertitle', 'my_login_logo_url_title' );
 
@@ -129,47 +129,86 @@ if ( function_exists( 'add_theme_support' ) ) {
   add_theme_support( 'post-thumbnails' ); 
 }
 
+// Custom Image Sizes
+add_image_size( '450', 450, 450, true );
+
+/*
+// Custom Taxonomies
+function add_custom_taxonomies() {
+	
+  // Add new "Category" taxonomy to Attractions
+  register_taxonomy('tax-cat', 'post-type', array(
+    // Hierarchical taxonomy (like categories)
+    'hierarchical' => true,
+	'show_admin_column' => true,
+    // This array of options controls the labels displayed in the WordPress Admin UI
+    'labels' => array(
+      'name' => _x( 'Tax Types', 'taxonomy general name' ),
+      'singular_name' => _x( 'Tax Type', 'taxonomy singular name' ),
+      'search_items' =>  __( 'Search Tax Types' ),
+      'all_items' => __( 'All Tax Types' ),
+      'parent_item' => __( 'Parent Tax Type' ),
+      'parent_item_colon' => __( 'Parent Tax Type:' ),
+      'edit_item' => __( 'Edit Tax Type' ),
+      'update_item' => __( 'Update Tax Type' ),
+      'add_new_item' => __( 'Add New Tax Type' ),
+      'new_item_name' => __( 'New Tax Type Name' ),
+      'menu_name' => __( 'Tax Types' ),
+    ),
+    // Control the slugs used for this taxonomy
+    'rewrite' => array(
+      'slug' => 'tax-type', // This controls the base slug that will display before each term
+      'with_front' => false, // Don't display the category base before "/locations/"
+      'hierarchical' => true // This will allow URL's like "/locations/boston/cambridge/"
+    ),
+  ));
+  
+}
+add_action( 'init', 'add_custom_taxonomies', 0 );
+*/
+
+/*
 // custom post types and icons
 function register_custom_posts() { 
 
 	// replace 'replace_this' with the custom post type information
-	register_post_type( 'post_type', /* (http://codex.wordpress.org/Function_Reference/register_post_type) */
+	register_post_type( 'post_type', // (http://codex.wordpress.org/Function_Reference/register_post_type) 
 		 	// let's now add all the options for this post type
 			array('labels' => array(
-				'name' => __('Post Types'), /* This is the Title of the Group */
-				'singular_name' => __('Post Type'), /* This is the individual type */
-				'all_items' => __('All Post Types'), /* the all items menu item */
-				'add_new' => __('Add New'), /* The add new menu item */
-				'add_new_item' => __('Add New Post Type'), /* Add New Display Title */
-				'edit' => __( 'Edit' ), /* Edit Dialog */
-				'edit_item' => __('Edit Post Type'), /* Edit Display Title */
-				'new_item' => __('New Post Type'), /* New Display Title */
-				'view_item' => __('View Post Type'), /* View Display Title */
-				'search_items' => __('Search Post Types'), /* Search Custom Type Title */ 
-				'not_found' =>  __('No Post Types Found.'), /* This displays if there are no entries yet */ 
-				'not_found_in_trash' => __('Nothing found in Trash'), /* This displays if there is nothing in the trash */
+				'name' => __('Post Types'), // This is the Title of the Group 
+				'singular_name' => __('Post Type'), // This is the individual type 
+				'all_items' => __('All Post Types'), // the all items menu item 
+				'add_new' => __('Add New'), // The add new menu item
+				'add_new_item' => __('Add New Post Type'), // Add New Display Title 
+				'edit' => __( 'Edit' ), // Edit Dialog 
+				'edit_item' => __('Edit Post Type'), // Edit Display Title 
+				'new_item' => __('New Post Type'), // New Display Title 
+				'view_item' => __('View Post Type'), // View Display Title 
+				'search_items' => __('Search Post Types'), // Search Custom Type Title 
+				'not_found' =>  __('No Post Types Found.'), // This displays if there are no entries yet 
+				'not_found_in_trash' => __('Nothing found in Trash'), // This displays if there is nothing in the trash 
 				'parent_item_colon' => ''
-				), /* end of arrays */
-				'description' => __( 'The Post Types.' ), /* Custom Type Description */
+				), // end of arrays 
+				'description' => __( 'The Post Types.' ), // Custom Type Description 
 				'public' => true,
 				'publicly_queryable' => true,
 				'exclude_from_search' => true,
 				'show_ui' => true,
 				'query_var' => true,
-				'menu_position' => '', /* this is what order you want it to appear in on the left hand side menu */ 
-				'menu_icon' => get_stylesheet_directory_uri() . '/img/wp-icon-clients-16.png', /* 16px x 16px */
-				'rewrite'	=> array( 'slug' => 'clients', 'with_front' => true ), /* you can specify its url slug */
-				'has_archive' => 'clients-archive', /* you can rename the slug here */
+				'menu_position' => '', // this is what order you want it to appear in on the left hand side menu 
+				'menu_icon' => 'dashicons-media-text', // https://developer.wordpress.org/resource/dashicons/
+				'rewrite'	=> array( 'slug' => 'post-type', 'with_front' => true ), // you can specify its url slug 
+				'has_archive' => 'post-type-archive', // you can rename the slug here 
 				'capability_type' => 'post',
 				'hierarchical' => false,
-				/* the next one is important, it tells what's enabled in the post editor */
-				'supports' => array('title') // all of the post capabilities
-		 	) /* end of options */
-	); /* end of register post type */
+				// the next one is important, it tells what's enabled in the post editor
+				'supports' => array('title', 'editor', 'thumbnail') // all of the post capabilities
+		 	) // end of options 
+	); // end of register post type 
 
 }
 add_action( 'init', 'register_custom_posts');
-
+*/
 if( function_exists('acf_add_options_page') ) {
 	acf_add_options_page();	
 }
@@ -282,7 +321,7 @@ add_action( 'widgets_init', 'underscores_starter_widgets_init' );
 if (!is_admin()) add_action("wp_enqueue_scripts", "my_jquery_enqueue", 11);
 function my_jquery_enqueue() {
    wp_deregister_script('jquery');
-   wp_register_script('jquery', "http" . ($_SERVER['SERVER_PORT'] == 443 ? "s" : "") . "://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js", false, null);
+   wp_register_script('jquery', "http" . ($_SERVER['SERVER_PORT'] == 443 ? "s" : "") . "://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js", false, null);
    wp_enqueue_script('jquery');
 }
 
@@ -292,11 +331,9 @@ function my_jquery_enqueue() {
 function underscores_starter_scripts() {
 	wp_enqueue_style( 'style-less', get_template_directory_uri() . '/less/style.less' );
 	wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/js/modernizr.js', array(), '', false );
-  wp_enqueue_script( 'vue-js', get_template_directory_uri() . '/js/vue.min.js', array('jquery'), '', true );
+	wp_enqueue_script( 'build', get_template_directory_uri() . '/js/build.js', array('jquery'), '', true );
+	wp_enqueue_script( 'vue-js', get_template_directory_uri() . '/js/vue.min.js', array('jquery'), '', true );
 	wp_enqueue_script( 'main-js', get_template_directory_uri() . '/js/main.js', array('jquery', 'vue-js'), '', true );
-
-
-
 }
 add_action( 'wp_enqueue_scripts', 'underscores_starter_scripts' );
 
@@ -314,7 +351,7 @@ require get_template_directory() . '/inc/extras.php';
 
 // Custom WordPress Admin Footer
 function remove_footer_admin () {
-	echo 'Website Development by Springboard Marketing';
+	echo 'Website Development by Swellfire';
 }
 add_filter('admin_footer_text', 'remove_footer_admin');
 
